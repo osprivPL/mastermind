@@ -1,7 +1,10 @@
-#ans{
-    width: auto
+body {
+    background-color: #191919;
+    color: rgb(221, 221, 221);
+    font-family: Comic Sans MS, serif;
+    font-size: 25px;
+    text-align: center;
 }
-
 #send {
     background-color: #338cff;
     border: none;
@@ -12,35 +15,3 @@
     padding: 15px 32px;
 }
 
-#wybor{
-    width: 90%;
-    margin: auto;
-}
-
-.guess{
-    background-color: #303030;
-    border: solid white 1px;
-    border-radius: 3%;
-    width:auto;
-
-}
-
-body {
-    background-color: #191919;
-    color: rgb(221, 221, 221);
-    font-family: Comic Sans MS, serif;
-    font-size: 25px;
-    text-align: center;
-}
-
-table {
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    width: 100%;
-}
-
-td{
-    width: auto;
-}
