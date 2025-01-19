@@ -1,23 +1,23 @@
 <?php
     session_start();
-    function pokazAns($ansARR): void
-{
-    echo "<table id = 'ans'>";
-    echo "<tr>";
-    for ($i = 0; $i < count($ansARR); $i++) {
-        echo '<td style = "background-color: ' . $ansARR[$i] . '; width: 200px; height: 100px">';
+    function printColor($ansARR): void {
+        print_r($ansARR);
+        echo "<table id = 'ans'>";
+        echo "<tr>";
+        for ($i = 0; $i < count($ansARR); $i++) {
+            echo '<td style = "background-color: ' . $ansARR[$i] . '; width: 200px; height: 100px">';
+        }
+        echo "</tr>";
+        echo "</table>";
     }
-    echo "</tr>";
-    echo "</table>";
-}
     function generujAns($length = 4): string{
-    $colors = array("red", "white", "orange", "cyan", "yellow", "pink", "green");
-    $correctAns = "";
-    for ($i = 0; $i < $length; $i++) {
-        $correctAns = $correctAns . $colors[rand(0, 6)] . " ";
+        $colors = array("red", "white", "orange", "cyan", "yellow", "pink", "green");
+        $correctAns = "";
+        for ($i = 0; $i < $length; $i++) {
+            $correctAns = $correctAns . $colors[rand(0, 6)] . " ";
+        }
+        return substr($correctAns, 0, -1);
     }
-    return substr($correctAns, 0, -1);
-}
     function printArr(&$arr): void {
     foreach ($arr as $key => $value) {
         echo $key . " => " . $value . "<br>";
@@ -60,12 +60,12 @@
     <?php
         $ansARR = explode(" ", $_SESSION["_correctAns"]);
 
-        pokazAns($ansARR);
+        printColor($ansARR);
 
         if($_SESSION['_actualAttempts']!= 0){
             $ans = "";
             for ($i = 1; $i <= count($ansARR);$i++){
-                $dot = $_POST["g".$i]." ";
+                $dot = $_POST["g".$i];
                 if ($dot == 'r'){
                     $ans = $ans."red ";
                 }
@@ -88,10 +88,12 @@
                     $ans = $ans."green ";
                 }
             }
-            array_push($_SESSION["listOfAns"], $ans);
+            array_push($_SESSION["listOfAns"], substr($ans, 0, -1));
         }
 
-        printArr($_SESSION["listOfAns"]);
+        for ($i = 0; $i < count($_SESSION["listOfAns"]); $i++){
+            printColor(explode(" ", $_SESSION["listOfAns"][$i]));
+        }
 
         echo '<table>';
             echo '<form method = "post">';
@@ -119,6 +121,7 @@
 
         echo '<div>';
             printArr($_SESSION);
+            print_r($_SESSION["listOfAns"]);
         echo '</div>';
     ?>
 </body>
