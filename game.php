@@ -23,12 +23,14 @@
             echo $key . " => " . $value . "<br>";
         }
     }
-
     function zlicz($arr): void{
-        $ans = explode(" ", substr($_SESSION["_correctAns"], 0, -1));
+        $ans = explode(" ", substr($_SESSION["_correctAns"], 0));
         $black =0;
         $white = 0;
         for ($i = 0; $i < count($arr); $i++){
+//            print_r($arr);
+//            echo"<br>";
+//            print_r($ans);
             if (in_array($arr[$i], $ans)){
                 if ($arr[$i] == $ans[$i]){
                     $black++;
@@ -43,19 +45,20 @@
                 }
             }
         }
-        echo $black." ".$white."<br>";
-        array_push($arr,"transparent");
+//        echo $black." ".$white."<br>";
+        $arr[] = "transparent";
         for ($i = 0; $i < $black; $i++){
-            array_push($arr, "black");
+            $arr[] = "black";
         }
         for ($i = 0; $i < $white; $i++){
-            array_push($arr, "white");
+            $arr[] = "white";
         }
         for($i = 0; $i < count($ans) - ($black + $white); $i++){
-            array_push($arr, "transparent");
+            $arr[] = "transparent";
         }
         printColor($arr);
     }
+
     error_reporting(E_ERROR | E_PARSE);
 
     if (!isset($_SESSION["_actualAttempts"])){
@@ -63,9 +66,18 @@
         $_SESSION["_attempts"] = $_POST["ileProb"];
         $_SESSION["_correctAns"] = generujAns($_POST["ilePol"]);
         $_SESSION["listOfAns"] = array();
+        $_SESSION["wygrana"] = false;
+    }
+//    print_r($_SESSION["listOfAns"]);
+//    echo "<br>";
+//    print_r($_SESSION["_correctAns"]);
+    foreach ($_SESSION["listOfAns"] as $key => $value){
+        if ($value == $_SESSION["_correctAns"]){
+            $_SESSION["wygrana"] = true;
+        }
     }
 
-    if ($_SESSION["_attempts"]-1 == $_SESSION["_actualAttempts"]) {
+    if ($_SESSION["_attempts"]-1 == $_SESSION["_actualAttempts"] || $_SESSION["wygrana"]){
         header("Location: end.php");
         exit();
     }
@@ -73,7 +85,7 @@
         $_SESSION["_actualAttempts"]++;
     }
 
-?>
+    ?>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -88,13 +100,11 @@
     <title>main</title>
 </head>
 <body>
-    <h2>GRA W MASTERMIND'A</h2>
-    <?php
-        $ansARR = explode(" ", $_SESSION["_correctAns"]);
-
-        printColor($ansARR);
-
-        if($_SESSION['_actualAttempts']!= 0){
+<h2>GRA W MASTERMIND'A</h2>
+<?php
+    $ansARR = explode(" ", $_SESSION["_correctAns"]);
+//    printColor($ansARR);
+    if($_SESSION['_actualAttempts']!= 0){
             $ans = "";
             for ($i = 1; $i <= count($ansARR);$i++){
                 $dot = $_POST["g".$i];
@@ -120,13 +130,21 @@
                     $ans = $ans."green ";
                 }
             }
-            array_push($_SESSION["listOfAns"], substr($ans, 0, -1));
+            $_SESSION["listOfAns"][] = substr($ans, 0, -1);
         }
-
-        for ($i = 0; $i < count($_SESSION["listOfAns"]); $i++){
+    for ($i = 0; $i < count($_SESSION["listOfAns"]); $i++){
             zlicz(explode(" ", $_SESSION["listOfAns"][$i]));
         }
+    foreach ($_SESSION["listOfAns"] as $key => $value){
+        if ($value == $_SESSION["_correctAns"]){
+            $_SESSION["wygrana"] = true;
+        }
+    }
 
+    if ($_SESSION["wygrana"]){
+        header("Location: end.php");
+        exit();
+    }
         echo '<table>';
             echo '<form method = "post">';
                 echo '<tr>';
@@ -150,11 +168,10 @@
             echo '</form>';
         echo "</table>";
 
-
-        echo '<div>';
-            printArr($_SESSION);
-            print_r($_SESSION["listOfAns"]);
-        echo '</div>';
+    //        echo '<div>';
+//            printArr($_SESSION);
+//            print_r($_SESSION["listOfAns"]);
+//        echo '</div>';
     ?>
 </body>
 </html>
