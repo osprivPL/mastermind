@@ -10,15 +10,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="author" content="Michał Ożdżyński">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     <title>index</title>
 </head>
 <body>
-    <h2>GRA W MASTERMIND'A</h2>
-    <form method="post" action = "main.php">
-        <label for = "ilePol">Jak długi ciąg chcesz odgadnąć?</label><input type="number" name = "ilePol" id = "ilePol" min="3" max="10" value = "4"><br>
-        <label for = "ileProb">Ile chcesz prób?</label><input type="number" name = "ileProb" id = "ileProb" min="3" max="10" value ="6" ><br>
-        <a href = "main.php"><input type="submit" id = "send" value="START"></a>
-    </form>
+
+    <div class = "container">
+        <h1>GRA W MASTERMIND'A</h1>
+        <form method="post" action = "game.php">
+            <div class="message">
+                <label for = "ilePol">Jak długi ciąg chcesz odgadnąć?</label><input class="num" type="number" name = "ilePol" id = "ilePol" min="3" max="10" value = "4"><br>
+                <label for = "ileProb">Ile chcesz prób?</label><input class = "num" type="number" name = "ileProb" id = "ileProb" min="3" max="10" value ="6" ><br>
+                <a href = "game.php"><input type="submit" id = "send" value="START"></a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
