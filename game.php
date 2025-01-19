@@ -1,7 +1,7 @@
 <?php
     session_start();
     function printColor($ansARR): void {
-        print_r($ansARR);
+//        print_r($ansARR);
         echo "<table id = 'ans'>";
         echo "<tr>";
         for ($i = 0; $i < count($ansARR); $i++) {
@@ -19,11 +19,43 @@
         return substr($correctAns, 0, -1);
     }
     function printArr(&$arr): void {
-    foreach ($arr as $key => $value) {
-        echo $key . " => " . $value . "<br>";
+        foreach ($arr as $key => $value) {
+            echo $key . " => " . $value . "<br>";
+        }
     }
-}
 
+    function zlicz($arr): void{
+        $ans = explode(" ", substr($_SESSION["_correctAns"], 0, -1));
+        $black =0;
+        $white = 0;
+        for ($i = 0; $i < count($arr); $i++){
+            if (in_array($arr[$i], $ans)){
+                if ($arr[$i] == $ans[$i]){
+                    $black++;
+                    $ans[$i] = "used";
+                }
+                else {
+                    $found = array_search($arr[$i], $ans);
+                    if (gettype($found) == "integer") {
+                        $white++;
+                        $ans[$found] = "used";
+                    }
+                }
+            }
+        }
+        echo $black." ".$white."<br>";
+        array_push($arr,"transparent");
+        for ($i = 0; $i < $black; $i++){
+            array_push($arr, "black");
+        }
+        for ($i = 0; $i < $white; $i++){
+            array_push($arr, "white");
+        }
+        for($i = 0; $i < count($ans) - ($black + $white); $i++){
+            array_push($arr, "transparent");
+        }
+        printColor($arr);
+    }
     error_reporting(E_ERROR | E_PARSE);
 
     if (!isset($_SESSION["_actualAttempts"])){
@@ -92,7 +124,7 @@
         }
 
         for ($i = 0; $i < count($_SESSION["listOfAns"]); $i++){
-            printColor(explode(" ", $_SESSION["listOfAns"][$i]));
+            zlicz(explode(" ", $_SESSION["listOfAns"][$i]));
         }
 
         echo '<table>';
