@@ -1,65 +1,11 @@
 <?php
     session_start();
-    function printColor($ansARR): void {
-//        print_r($ansARR);
-        echo "<table id = 'ans'>";
-        echo "<tr>";
-        for ($i = 0; $i < count($ansARR); $i++) {
-            echo '<td style = "background-color: ' . $ansARR[$i] . '; width: 200px; height: 100px">';
-        }
-        echo "</tr>";
-        echo "</table>";
-    }
-    function generujAns($length = 4): string{
-        $colors = array("red", "white", "orange", "cyan", "yellow", "pink", "green");
-        $correctAns = "";
-        for ($i = 0; $i < $length; $i++) {
-            $correctAns = $correctAns . $colors[rand(0, 6)] . " ";
-        }
-        return substr($correctAns, 0, -1);
-    }
-    function printArr(&$arr): void {
-        foreach ($arr as $key => $value) {
-            echo $key . " => " . $value . "<br>";
-        }
-    }
-    function zlicz($arr): void{
-        $ans = explode(" ", substr($_SESSION["_correctAns"], 0));
-        $black =0;
-        $white = 0;
-        for ($i = 0; $i < count($arr); $i++){
-//            print_r($arr);
-//            echo"<br>";
-//            print_r($ans);
-            if (in_array($arr[$i], $ans)){
-                if ($arr[$i] == $ans[$i]){
-                    $black++;
-                    $ans[$i] = "used";
-                }
-                else {
-                    $found = array_search($arr[$i], $ans);
-                    if (gettype($found) == "integer") {
-                        $white++;
-                        $ans[$found] = "used";
-                    }
-                }
-            }
-        }
-//        echo $black." ".$white."<br>";
-        $arr[] = "transparent";
-        for ($i = 0; $i < $black; $i++){
-            $arr[] = "black";
-        }
-        for ($i = 0; $i < $white; $i++){
-            $arr[] = "white";
-        }
-        for($i = 0; $i < count($ans) - ($black + $white); $i++){
-            $arr[] = "transparent";
-        }
-        printColor($arr);
-    }
-
     error_reporting(E_ERROR | E_PARSE);
+
+    require "functions\printColor.php";
+    require "functions\generujAns.php";
+    require "functions\printArr.php";
+    require "functions\zlicz.php";
 
     if (!isset($_SESSION["_actualAttempts"])){
         $_SESSION["_actualAttempts"] = -1;
@@ -94,10 +40,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="Michał Ożdżyński">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel = "stylesheet" href = "game.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel = "stylesheet" href = "styles/game.css">
 
-    <title>main</title>
+    <title>MASTERMIND</title>
 </head>
 <body>
 <h2>GRA W MASTERMIND'A</h2>

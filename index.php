@@ -10,9 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="author" content="Michał Ożdżyński">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index.css">
-    <title>index</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <title>MASTERMIND</title>
 </head>
 <body>
 

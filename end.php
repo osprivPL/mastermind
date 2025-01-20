@@ -1,17 +1,7 @@
 <?php
-session_start();
-error_reporting(E_ERROR | E_PARSE);
-
-function printColor($ansARR): void {
-//        print_r($ansARR);
-    echo "<table id = 'ans'>";
-    echo "<tr>";
-    for ($i = 0; $i < count($ansARR); $i++) {
-        echo '<td style = "background-color: ' . $ansARR[$i] . '; width: 200px; height: 100px">';
-    }
-    echo "</tr>";
-    echo "</table>";
-}
+    session_start();
+    error_reporting(E_ERROR | E_PARSE);
+    require "functions\printColor.php";
 ?>
 <html lang="pl">
 <head>
@@ -20,9 +10,9 @@ function printColor($ansARR): void {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="author" content="Michał Ożdżyński">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href ="end.css">
-    <title>KONIEC GRY</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href ="styles/end.css">
+    <title>MASTERMIND</title>
 
 </head>
 <body>
