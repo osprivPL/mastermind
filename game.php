@@ -75,6 +75,9 @@
                 else if ($dot == 'g'){
                     $ans = $ans."green ";
                 }
+                else{
+                    $ans = $ans."transparent ";
+                }
             }
             $_SESSION["listOfAns"][] = substr($ans, 0, -1);
         }
